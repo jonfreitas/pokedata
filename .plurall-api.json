@@ -1,0 +1,17 @@
+{
+  "type": "dataserver",
+  "name": "dataserver",
+  "updated": "2023-11-10T12:52:19.817Z",
+  "created": "2023-11-10T12:37:46.074Z",
+  "engines": {
+    "dataserver": "0.0.1"
+  },
+  "protos": [],
+  "services": [
+    {
+      "name": "plurall-cache",
+      "category": "",
+      "models": []
+    }
+  ]
+}
