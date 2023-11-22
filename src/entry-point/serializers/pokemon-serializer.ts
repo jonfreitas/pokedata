@@ -8,7 +8,7 @@ import { HasMoreEvolutionDTO } from '../dto/has-more-evolution-dto'
 export class PokemonSerializer {
   static toDTO = (pokemon: Pokemon): PokemonDTO => {
     const pokemonDTO = new PokemonDTO()
-    
+
     pokemonDTO.id = pokemon.id
     pokemonDTO.name = pokemon.name
     pokemonDTO.level = pokemon.level
@@ -26,6 +26,7 @@ export class PokemonSerializer {
 
   static toEntity = (pokemonDTO: PokemonDTO): Pokemon => {
     const pokemon = new Pokemon()
+
     pokemon.id = pokemonDTO.id
     pokemon.name = pokemonDTO.name
     pokemon.level = pokemonDTO.level
@@ -40,13 +41,4 @@ export class PokemonSerializer {
 
     return pokemon
   }
-
-  static abilitiesToEntity(abilities: AbilitiesDTO): Abilities {
-    return <Abilities>Abilities[AbilitiesDTO[abilities]]
-  }
-
-  static hasEvolutionToEntity(hasMoreEvolution: HasMoreEvolutionDTO): HasMoreEvolution {
-    return <HasMoreEvolution>HasMoreEvolution[HasMoreEvolutionDTO[hasMoreEvolution]]
-  }
-
 }

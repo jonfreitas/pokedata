@@ -50,13 +50,7 @@ export default class PokemonRepository implements IPokemonRepository {
   }
 
   async list(filter: Partial<Pokemon>): Promise<Pokemon[]> {
-    console.log(filter)
-    console.log(filter.hasMoreEvolution)
-    return (await PokemonModel.find(filter))?.map(this.toEntity)
-
-    // const result = await PokemonModel.find( { hasMoreEvolution: filter.hasMoreEvolution } )
-    // if (!result) return []
-    // return result?.map(this.toEntity)
+    return (await PokemonModel.find(filter))
   }
 
   private toEntity = (dto: Pokemon) => {

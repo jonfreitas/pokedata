@@ -99,15 +99,21 @@ export default class PokemonService extends BaseService {
   }
 
   public ListPokemon = async (
-    args: ServerUnaryCall<PokemonDTO, PokemonDTO[]>,
-    callback: sendUnaryData<PokemonDTO>
+    args: ServerUnaryCall<ListPokemonDTO, PokemonDTO[]>,
+    callback: sendUnaryData<{ pokemons: PokemonDTO[] }>
   ): Promise<void> => {
     try {
-      const pokemons = await this.listPokemon.execute(args.request)
-      pokemons.map((pokemon) => {
-        return PokemonSerializer.toDTO(pokemon)
-      })
-      return callback({ code: status.NOT_FOUND, message: 'Pokemon not found' })
+      const { abilities, hasMoreEvolution} = args.request
+
+      if (abilities) {
+        const pokemons = await this.listPokemon.execute({ abilities: abilities })
+        return callback(null, { pokemons })
+      }
+      if (hasMoreEvolution) {
+        const pokemons = await this.listPokemon.execute({ hasMoreEvolution: hasMoreEvolution })
+        return callback(null, { pokemons })
+      }
+      return callback({ code: status.NOT_FOUND, message: 'Pokemons not found' })
     } catch (error) {
       return this.handlerError(callback, error as Error, 'GET_POKEMON_ERROR')
     }

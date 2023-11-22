@@ -37,22 +37,8 @@ const PokemonSchema = new Schema<Pokemon>(
   { id: true, toObject: toJsonCleanup }
 )
 
-// const PokemonModel = mongoose.model<{
-//   id: string
-//   name: string
-//   level: number
-//   basicForm: string
-//   ability: string
-//   abilities: string[]
-//   middleFormEvolutionLevel: number
-//   middleForm: string
-//   finalFormEvolutionLevel: number
-//   finalForm: string
-//   hasMoreEvolution: boolean
-// }>('pokemon', PokemonSchema)
-
 const PokemonModel = mongoose.model(
-  'pokemon',
+  'pokemons',
   PokemonSchema
 ) as Model<Pokemon>
 

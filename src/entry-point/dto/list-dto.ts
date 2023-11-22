@@ -1,7 +1,6 @@
-import { AbilitiesDTO } from "./abilities-dto"
-import { HasMoreEvolutionDTO } from "./has-more-evolution-dto"
+import { Pokemon } from '../../core/entities/pokemon'
 
 export type ListPokemonDTO = {
-  abilities: AbilitiesDTO,
-  hasMoreEvolution: HasMoreEvolutionDTO
+  abilities: string[],
+  hasMoreEvolution: boolean
 }

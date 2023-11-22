@@ -67,15 +67,15 @@ message GetPokemonResponse {
 }
 
 message UpdatePokemonResponse {
-  IsSuccessful created = 1;
+  IsSuccessful updated = 1;
 }
 
 message UpdateLevelPokemonResponse {
-  IsSuccessful status = 1;
+  IsSuccessful updated = 1;
 }
 
 message ListPokemonResponse {
-  Pokemon pokemon = 1;
+  repeated Pokemon pokemons = 1;
 }
 
 enum IsSuccessful {
@@ -90,10 +90,10 @@ enum Sort {
 message Pokemon {
   string id = 1;
   string name = 2;
-  string level = 3;
+  int32 level = 3;
   string basicForm = 4;
   string ability = 5;
-  string abilities = 6;
+  repeated string abilities = 6;
   int32 middleFormEvolutionLevel = 7;
   string middleForm = 8;
   int32 finalFormEvolutionLevel = 9;
