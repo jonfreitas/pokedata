@@ -1,6 +1,6 @@
 import { Pokemon } from '../../../core/entities/pokemon'
 import { IPokemonRepository } from '../../../core/repositories/pokemon-repository'
-import { PokemonMapping, PokemonModel } from './mapping/pokemon-mapping'
+import { PokemonModel } from './mapping/pokemon-mapping'
 
 
 export default class PokemonRepository implements IPokemonRepository {
@@ -33,7 +33,7 @@ export default class PokemonRepository implements IPokemonRepository {
     )
 
     await PokemonModel.updateOne(
-      { _id: pokemon.id }, 
+      { _id: pokemon.id },
       { $push: { abilities: pokemon.ability } },
     )
   }
@@ -50,10 +50,16 @@ export default class PokemonRepository implements IPokemonRepository {
   }
 
   async list(filter: Partial<Pokemon>): Promise<Pokemon[]> {
-    return (await PokemonModel.find(filter)).map(this.toEntity)
+    console.log(filter)
+    console.log(filter.hasMoreEvolution)
+    return (await PokemonModel.find(filter))?.map(this.toEntity)
+
+    // const result = await PokemonModel.find( { hasMoreEvolution: filter.hasMoreEvolution } )
+    // if (!result) return []
+    // return result?.map(this.toEntity)
   }
 
-  private toEntity = (dto: PokemonMapping) => {
+  private toEntity = (dto: Pokemon) => {
     if (!dto) return
 
     const pokemon = new Pokemon()

@@ -1,22 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-param-reassign */
 import mongoose, { Model, Schema } from 'mongoose'
+import { Pokemon } from '../../../../core/entities/pokemon'
 
 mongoose.set('useCreateIndex', true)
-
-export type PokemonMapping = {
-  id: string
-  name: string
-  level: number
-  basicForm: string
-  ability: string
-  abilities: string[]
-  middleFormEvolutionLevel: number
-  middleForm: string
-  finalFormEvolutionLevel: number
-  finalForm: string
-  hasMoreEvolution: boolean
-}
 
 type ConvertedDocument = {
   _id: string
@@ -33,17 +20,7 @@ const toJsonCleanup = {
   },
 }
 
-const variablesSchema = new Schema<unknown>(
-  {},
-  { strict: false, _id: false, toObject: toJsonCleanup }
-)
-
-const customDataSchema = new Schema<unknown>(
-  {},
-  { strict: false, _id: false, toObject: toJsonCleanup }
-)
-
-const pokemonSchema = new Schema<PokemonMapping>(
+const PokemonSchema = new Schema<Pokemon>(
   {
     id: { type: String },
     name: { type: String },
@@ -60,9 +37,23 @@ const pokemonSchema = new Schema<PokemonMapping>(
   { id: true, toObject: toJsonCleanup }
 )
 
+// const PokemonModel = mongoose.model<{
+//   id: string
+//   name: string
+//   level: number
+//   basicForm: string
+//   ability: string
+//   abilities: string[]
+//   middleFormEvolutionLevel: number
+//   middleForm: string
+//   finalFormEvolutionLevel: number
+//   finalForm: string
+//   hasMoreEvolution: boolean
+// }>('pokemon', PokemonSchema)
+
 const PokemonModel = mongoose.model(
   'pokemon',
-  pokemonSchema
-) as Model<PokemonMapping>
+  PokemonSchema
+) as Model<Pokemon>
 
 export { PokemonModel }

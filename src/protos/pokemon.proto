@@ -22,7 +22,7 @@ message CreatePokemonRequest {
 
 message GetPokemonRequest {
   string id = 1;
- }
+}
 
 message UpdatePokemonRequest {
   string id = 1;
@@ -35,7 +35,7 @@ message UpdatePokemonRequest {
   string middleForm = 8;
   int32 finalFormEvolutionLevel = 9;
   string finalForm = 10;
-  bool hasMoreEvolution = 11; 
+  bool hasMoreEvolution = 11;
 }
 
 message UpdateLevelPokemonRequest {
@@ -44,7 +44,7 @@ message UpdateLevelPokemonRequest {
 }
 
 message ListPokemonRequest {
-  repeated string abilities = 1;
+  string abilities = 1;
   bool hasMoreEvolution = 2;
 }
 
@@ -79,12 +79,12 @@ message ListPokemonResponse {
 }
 
 enum IsSuccessful {
-  true = 1;
+  true = 0;
 }
 
 enum Sort {
-  ASC = 1;
-  DESC = 2;
+  ASC = 0;
+  DESC = 1;
 }
 
 message Pokemon {
@@ -98,6 +98,6 @@ message Pokemon {
   string middleForm = 8;
   int32 finalFormEvolutionLevel = 9;
   string finalForm = 10;
-  bool hasMoreEvolution = 11; 
+  bool hasMoreEvolution = 11;
 }
 

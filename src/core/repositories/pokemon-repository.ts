@@ -5,5 +5,5 @@ export interface IPokemonRepository {
   get: (id: string) => Promise<Pokemon>
   update: (pokemon: Pokemon) => Promise<void>
   updateLevel: (pokemon: Pokemon) => Promise<void>
-  list(filter: Partial<Pokemon>): Promise<Pokemon[]>
+  list: (filter: Partial<Pokemon>) => Promise<Pokemon[]>
 }
