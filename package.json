@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@sdk12/eslint-config": "3.0.1",
+    "@types/amqplib": "^0.8.2",
     "@types/chai": "4.3.10",
     "@types/chai-things": "0.0.38",
     "@types/mocha": "10.0.4",
