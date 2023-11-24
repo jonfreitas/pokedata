@@ -10,6 +10,12 @@ export default class PokemonRepository implements IPokemonRepository {
     )
   }
 
+  async createPokemons(pokemon: Pokemon): Promise<Pokemon> {
+    return this.toEntity(
+      (await PokemonModel.create({ ...pokemon }))?.toObject()
+    )
+  }
+
   async get(id: string): Promise<Pokemon> {
     return this.toEntity((await PokemonModel.findById(id).exec())?.toObject())
   }

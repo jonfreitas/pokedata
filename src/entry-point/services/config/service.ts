@@ -2,6 +2,7 @@ import { CreatePokemon } from '../../../core/use-cases/pokemon/create-pokemon'
 import { GetPokemon } from '../../../core/use-cases/pokemon/get-pokemon'
 import { UpdatePokemon } from '../../../core/use-cases/pokemon/update-pokemon'
 import { UpdateLevelPokemon } from '../../../core/use-cases/pokemon/update-level-pokemon'
+import { PokemonLevelUpdated } from '../../../data-providers/runners/producers/pokemon-level-updated'
 import { ListPokemon } from '../../../core/use-cases/pokemon/list-pokemon'
 import PokemonRepository from '../../../data-providers/repositories/mongoose/pokemon-repository'
 import PokemonService from '../pokemon-service'
@@ -21,13 +22,13 @@ export class PokemonServiceConfig extends Base {
             p.IGetPokemon,
             p.IUpdatePokemon,
             p.IUpdateLevelPokemon,
-            p.IListPokemon
+            p.IPokemonLevelUpdated
           )
       )
- 
+
     this.service(
       'ICreatePokemon',
-      (p) => new CreatePokemon(p.IPokemonRepository)
+      (p) => new CreatePokemon(p.IPokemonRepository),
     )
 
     this.service(
@@ -42,8 +43,13 @@ export class PokemonServiceConfig extends Base {
 
     this.service(
       'IUpdateLevelPokemon',
-      (p) => new UpdateLevelPokemon(p.IPokemonRepository)
+      (p) => new UpdateLevelPokemon(
+        p.IPokemonRepository,
+        p.IPokemonLevelUpdated
+      )
     )
+
+    this.service('IPokemonLevelUpdated', () => new PokemonLevelUpdated())
 
     this.service(
       'IListPokemon',

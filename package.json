@@ -17,16 +17,18 @@
     "start:dev": "nodemon",
     "start:pack": "yarn build && yarn install:prod && node dist/index.js",
     "lint": "eslint src --ext js,ts",
-    "test": "mocha -r ts-node/register '{src,test}/**/*spec.ts'"
+    "test": "mocha -r ts-node/register '{src,test}/**/*spec.ts'",
+    "start:seeder": "ts-node ./src/data-providers/seeder/index.ts"
   },
   "engines": {
     "node": ">=12.15.0"
   },
   "dependencies": {
+    "@sdk12/dataserver": "2.1.2",
+    "@sdk12/mongo-connection": "1.2",
+    "amqplib": "^0.10.3",
     "plurall-cache": "git+ssh://git@gitlab.com:sdk12/plurall/microservices/frameworks/nodejs/cache.git",
     "plurall-mongo": "git+ssh://git@gitlab.com:sdk12/plurall/microservices/frameworks/nodejs/dbs/mongo.git",
-    "@sdk12/mongo-connection": "1.2",
-    "@sdk12/dataserver": "2.1.2",
     "typescript": "5.2.2"
   },
   "devDependencies": {
@@ -41,7 +43,7 @@
     "copyfiles": "2.4.1",
     "dotenv": "16.3.1",
     "eslint": "^8.16.0",
-    "mocha": "^9.0.0",
+    "mocha": "10.1.0",
     "nodemon": "3.0.1",
     "readline": "1.3.0",
     "ts-node": "10.9.1",

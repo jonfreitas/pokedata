@@ -41,4 +41,34 @@ export class PokemonSerializer {
 
     return pokemon
   }
+
+  static fivePokemonToEntity = (pokemonDTO: {
+    id: string;
+    name: string;
+    level: number;
+    basicForm: string;
+    ability: string;
+    abilities: string[];
+    middleFormEvolutionLevel: number;
+    middleForm: string;
+    finalFormEvolutionLevel: number;
+    finalForm: string;
+    hasMoreEvolution: boolean
+  }): Pokemon => {
+    const pokemon = new Pokemon()
+
+    pokemon.id = pokemonDTO.id
+    pokemon.name = pokemonDTO.name
+    pokemon.level = pokemonDTO.level
+    pokemon.basicForm = pokemonDTO.basicForm
+    pokemon.ability = pokemonDTO.ability
+    pokemon.abilities = Array(pokemon.ability)
+    pokemon.middleFormEvolutionLevel = pokemonDTO.middleFormEvolutionLevel
+    pokemon.middleForm = pokemonDTO.middleForm
+    pokemon.finalFormEvolutionLevel = pokemonDTO.finalFormEvolutionLevel
+    pokemon.finalForm = pokemonDTO.finalForm
+    pokemon.hasMoreEvolution = pokemonDTO.hasMoreEvolution
+
+    return pokemon
+  }
 }

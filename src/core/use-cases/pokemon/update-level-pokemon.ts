@@ -4,16 +4,20 @@
 import { IPokemonRepository } from '../../repositories/pokemon-repository'
 import { Pokemon } from '../../entities/pokemon'
 import { IUpdateLevelPokemon } from './interfaces/update-level-pokemon'
+import { IPokemonLevelUpdated } from '../../external-services/pokemon-level-updated'
 import InvalidArgument from '../../entities/error/invalid-argument'
 import ModelNotFound from '../../entities/error/model-not-found'
 
 export class UpdateLevelPokemon implements IUpdateLevelPokemon {
   private pokemonRepository: IPokemonRepository
+  private pokemonLevelUpdated: IPokemonLevelUpdated
 
   constructor(
-    pokemonRepository: IPokemonRepository
+    pokemonRepository: IPokemonRepository,
+    pokemonLevelUpdated: IPokemonLevelUpdated
   ) {
     this.pokemonRepository = pokemonRepository
+    this.pokemonLevelUpdated = pokemonLevelUpdated
   }
 
   async execute(pokemon: Pokemon): Promise<Pokemon> {
@@ -22,6 +26,8 @@ export class UpdateLevelPokemon implements IUpdateLevelPokemon {
     if (!pokemon) {
       throw new ModelNotFound(`The Message model: ${pokemon.id} not be found`)
     }
+
+    await this.pokemonLevelUpdated.publish(pokemon.id, pokemon.level)
     return pokemon
   }
 }
