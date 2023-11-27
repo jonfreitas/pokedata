@@ -28,8 +28,10 @@ export class PokemonLevelUpdated implements IPokemonLevelUpdated {
         this.type
       )
       logger.debug(`POKEMON_LEVEL_UPDATED_PUBLISH_DEBUG: publish to ${this.exchange}`)
+      return
     } catch (error) {
       logger.error('POKEMON_LEVEL_UPDATED_PUBLISH_ERROR', error)
+      return
     }
   }
 }

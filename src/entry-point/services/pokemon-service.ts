@@ -9,9 +9,12 @@ import { IGetPokemon } from '../../core/use-cases/pokemon/interfaces/get-pokemon
 import { IUpdatePokemon } from '../../core/use-cases/pokemon/interfaces/update-pokemon'
 import { IUpdateLevelPokemon } from '../../core/use-cases/pokemon/interfaces/update-level-pokemon'
 import { IListPokemon } from '../../core/use-cases/pokemon/interfaces/list-pokemon'
+import { IPokemonLevelUpdated } from '../../core/external-services/pokemon-level-updated'
 
 export default class PokemonService extends BaseService {
   proto: string = path.join(__dirname, '..', '..', 'protos', 'pokemon.proto')
+
+  private pokemonLevelUpdated: IPokemonLevelUpdated
 
   createPokemon: ICreatePokemon
   getPokemon: IGetPokemon
@@ -24,7 +27,8 @@ export default class PokemonService extends BaseService {
     getPokemon: IGetPokemon,
     updatePokemon: IUpdatePokemon,
     updateLevelPokemon: IUpdateLevelPokemon,
-    listPokemon: IListPokemon
+    listPokemon: IListPokemon,
+    pokemonLevelUpdated: IPokemonLevelUpdated
   ) {
     super()
     this.createPokemon = createPokemon
@@ -32,6 +36,7 @@ export default class PokemonService extends BaseService {
     this.updatePokemon = updatePokemon
     this.updateLevelPokemon = updateLevelPokemon
     this.listPokemon = listPokemon
+    this.pokemonLevelUpdated = pokemonLevelUpdated
   }
 
   public CreatePokemon = async (
@@ -86,6 +91,9 @@ export default class PokemonService extends BaseService {
     callback: sendUnaryData<PokemonDTO>
   ): Promise<void> => {
     try {
+      if (args.request.sentMessage === undefined) {
+        await this.pokemonLevelUpdated.publish(args.request.id, args.request.level)
+      }
       const pokemon = await this.updateLevelPokemon.execute(
         PokemonSerializer.toEntity(args.request)
       )
@@ -103,14 +111,8 @@ export default class PokemonService extends BaseService {
     callback: sendUnaryData<{ pokemons: PokemonDTO[] }>
   ): Promise<void> => {
     try {
-      const { abilities, hasMoreEvolution} = args.request
-
-      if (abilities) {
-        const pokemons = await this.listPokemon.execute({ abilities: abilities })
-        return callback(null, { pokemons })
-      }
-      if (hasMoreEvolution) {
-        const pokemons = await this.listPokemon.execute({ hasMoreEvolution: hasMoreEvolution })
+      if (args.request !== undefined) {
+        const pokemons = await this.listPokemon.execute(args.request)
         return callback(null, { pokemons })
       }
       return callback({ code: status.NOT_FOUND, message: 'Pokemons not found' })

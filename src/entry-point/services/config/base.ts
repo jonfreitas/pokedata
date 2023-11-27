@@ -2,11 +2,11 @@
 export abstract class Base {
   protected services: unknown
 
-  constructor() {
+  protected constructor() {
     this.services = {}
   }
 
-  protected service(name: PropertyKey, cb: (param) => any): Base {
+  protected service(name: PropertyKey, cb: (param: any) => any): Base {
     Object.defineProperty(this, name, {
       get: () => {
         if (!this.services.hasOwnProperty(name)) {

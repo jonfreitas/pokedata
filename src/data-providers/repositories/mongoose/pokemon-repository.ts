@@ -40,7 +40,7 @@ export default class PokemonRepository implements IPokemonRepository {
 
     await PokemonModel.updateOne(
       { _id: pokemon.id },
-      { $push: { abilities: pokemon.ability } },
+      { $addToSet: { abilities: pokemon.ability } },
     )
   }
 
@@ -56,6 +56,7 @@ export default class PokemonRepository implements IPokemonRepository {
   }
 
   async list(filter: Partial<Pokemon>): Promise<Pokemon[]> {
+    console.log(filter)
     return (await PokemonModel.find(filter))
   }
 

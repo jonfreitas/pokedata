@@ -13,6 +13,7 @@ export class PokemonServiceConfig extends Base {
     super()
 
     this.service('IPokemonRepository', () => new PokemonRepository())
+    this.service('IPokemonLevelUpdated',() => new PokemonLevelUpdated())
 
     this.service(
         'IPokemonService',
@@ -22,6 +23,7 @@ export class PokemonServiceConfig extends Base {
             p.IGetPokemon,
             p.IUpdatePokemon,
             p.IUpdateLevelPokemon,
+            p.IListPokemon,
             p.IPokemonLevelUpdated
           )
       )
@@ -43,13 +45,13 @@ export class PokemonServiceConfig extends Base {
 
     this.service(
       'IUpdateLevelPokemon',
-      (p) => new UpdateLevelPokemon(
-        p.IPokemonRepository,
-        p.IPokemonLevelUpdated
-      )
+      (p) => new UpdateLevelPokemon(p.IPokemonRepository)
     )
 
-    this.service('IPokemonLevelUpdated', () => new PokemonLevelUpdated())
+    this.service(
+      'IListPokemon',
+      (p) => new ListPokemon(p.IPokemonRepository)
+    )
 
     this.service(
       'IListPokemon',

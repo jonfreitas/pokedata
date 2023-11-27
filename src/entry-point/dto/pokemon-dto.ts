@@ -10,4 +10,8 @@ export class PokemonDTO {
   finalFormEvolutionLevel: number
   finalForm: string
   hasMoreEvolution: boolean
+  sentMessage: boolean
+  origin: string
+  updated: boolean
+  responseMessage: string
 }

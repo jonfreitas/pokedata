@@ -12,4 +12,8 @@ export class Pokemon extends Base {
     public finalFormEvolutionLevel: number
     public finalForm: string
     public hasMoreEvolution: boolean
+    public sentMessage: boolean
+    public origin: string
+    public updated: boolean
+    public responseMessage: string
 }

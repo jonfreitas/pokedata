@@ -18,9 +18,11 @@ export class GetPokemon implements IGetPokemon {
 
   async execute(id: string): Promise<Pokemon> {
     if (!id) throw new InvalidArgument('The field id is required')
+
     const [pokemon] = await Promise.all([
       this.pokemonRepository.get(id),
     ])
+
     if (!pokemon) {
       throw new ModelNotFound(`The Message model: ${id} not be found`)
     }
