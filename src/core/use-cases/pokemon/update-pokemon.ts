@@ -17,7 +17,7 @@ export class UpdatePokemon implements IUpdatePokemon {
   }
 
   async execute(pokemon: Pokemon): Promise<Pokemon> {
-    if (!pokemon.id || !pokemon.level || !pokemon.basicForm) throw new InvalidArgument('The fields id, basicForm and level are required')
+    if (!pokemon.id || !pokemon.level || !pokemon.basicForm) throw new InvalidArgument(`Os campos 'id', 'basicForm' and 'level' são obrigatórios!`)
 
     const basePokemon = await this.pokemonRepository.get(pokemon.id)
 

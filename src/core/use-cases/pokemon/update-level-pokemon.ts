@@ -17,7 +17,7 @@ export class UpdateLevelPokemon implements IUpdateLevelPokemon {
   }
 
   async execute(pokemon: Pokemon): Promise<Pokemon> {
-    if (!pokemon.id || !pokemon.level) throw new InvalidArgument('The fields id and level is required')
+    if (!pokemon.id || !pokemon.level) throw new InvalidArgument(`Os campos 'id' e 'level' são obrigatórios!`)
 
     const requestPokemon = await this.pokemonRepository.get(pokemon.id)
 
@@ -38,7 +38,7 @@ export class UpdateLevelPokemon implements IUpdateLevelPokemon {
 
     if (updatedPokemon.level === requestPokemon.level) {
       pokemon.updated = false
-      pokemon.responseMessage = `O nível do pokémon continua o mesmo.`
+      pokemon.responseMessage = `O nível do pokémon continua o mesmo, portanto não foi atualizado.`
 
       return pokemon
     }
