@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-param-reassign */
 import mongoose, { Model, Schema } from 'mongoose'
-import { Pokemon } from '../../../../core/entities/pokemon'
+import { Pokemon } from '@/core/entities/pokemon'
 
 mongoose.set('useCreateIndex', true)
 

@@ -5,8 +5,7 @@ export default class BrokerClient {
   private readonly uri: string
 
   constructor() {
-    // this.uri = String(process.env.BROKER_AMQP_RABBITMQ)
-    this.uri = 'amqp://guest:guest@0.0.0.0:5672'
+    this.uri = process.env.BROKER_AMQP_RABBITMQ
   }
 
   start(groupId: string): void {

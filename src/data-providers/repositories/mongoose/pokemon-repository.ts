@@ -1,5 +1,5 @@
-import { Pokemon } from '../../../core/entities/pokemon'
-import { IPokemonRepository } from '../../../core/repositories/pokemon-repository'
+import { Pokemon } from '@/core/entities/pokemon'
+import { IPokemonRepository } from '@/core/repositories/pokemon-repository'
 import { PokemonModel } from './mapping/pokemon-mapping'
 
 
@@ -56,7 +56,6 @@ export default class PokemonRepository implements IPokemonRepository {
   }
 
   async list(filter: Partial<Pokemon>): Promise<Pokemon[]> {
-    console.log(filter)
     return (await PokemonModel.find(filter))
   }
 

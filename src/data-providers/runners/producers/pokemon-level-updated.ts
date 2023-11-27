@@ -1,6 +1,6 @@
 import { logger } from '@sdk12/dataserver'
 import BrokerClient from '../client'
-import { IPokemonLevelUpdated } from '../../../core/external-services/pokemon-level-updated'
+import { IPokemonLevelUpdated } from '@/core/external-services/pokemon-level-updated'
 
 export class PokemonLevelUpdated implements IPokemonLevelUpdated {
   private readonly exchange: string = 'pokemon.level.update'
