@@ -5,7 +5,6 @@ import path from 'path'
 
 const localStart = `${process.env.LOCAL_GRPC}${process.env.PORT}`
 const protoPath = path.join('./', 'src/protos')
-console.log(protoPath)
 const engine = new Engine({ protos: { includeDirs: [protoPath] } })
 engine.protoOptions.keepCase = false
 
