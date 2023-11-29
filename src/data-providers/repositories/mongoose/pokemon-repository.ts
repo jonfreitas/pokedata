@@ -1,4 +1,4 @@
-import { Pokemon } from '@/core/entities/pokemon'
+import { Pokemon } from '../../../core/entities/pokemon'
 import { IPokemonRepository } from '@/core/repositories/pokemon-repository'
 import { PokemonModel } from './mapping/pokemon-mapping'
 

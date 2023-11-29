@@ -1,56 +1,43 @@
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import mongoose, { ClientSession } from 'mongoose'
 
-import PokemonRepository from '@/data-providers/repositories/mongoose/pokemon-repository'
-import { UpdatePokemon } from '@/core/use-cases/pokemon/update-pokemon'
+import PokemonRepository from '../../../../src/data-providers/repositories/mongoose/pokemon-repository'
+import { UpdatePokemon } from '../../../../src/core/use-cases/pokemon/update-pokemon'
 import { Pokemon } from '../../../../src/core/entities/pokemon'
-import { mockPokemon } from '../../../mocks/pokemon'
+import { mockUpdatePokemon } from '../../../mocks/pokemon'
 
 chai.use(chaiAsPromised)
 
 describe('Update Pokémon', () => {
   const sandbox = sinon.createSandbox()
+  const pokemonRepository = new PokemonRepository()
 
   let pokemonRepositoryFake: sinon.SinonStub
   let updatePokemon: UpdatePokemon
 
   beforeEach(() => {
     sandbox.restore()
-    const pokemonRepository = new PokemonRepository()
-
-    sandbox.stub(pokemonRepository, 'update').resolves()
-
-    sandbox.stub(mongoose, 'startSession').resolves({
-      startTransaction: () => sandbox.stub(),
-      commitTransaction: () => sandbox.stub().resolves({}),
-      abortTransaction: () => sandbox.stub().resolves({}),
-      endSession: () => sandbox.stub().resolves(),
-    } as unknown as ClientSession)
-
-    updatePokemon = new UpdatePokemon(
-      pokemonRepository
-    )
+    pokemonRepositoryFake = sandbox.stub(pokemonRepository, 'update')
+    updatePokemon = new UpdatePokemon(pokemonRepository)
   })
 
-  it("should update pokémon", async () => {
+  it("should update a pokémon", async () => {
     pokemonRepositoryFake.resolves({
-      id: mockPokemon.id,
-      name: mockPokemon.name,
-      level: mockPokemon.level,
-      basicForm: mockPokemon.basicForm,
-      ability: mockPokemon.ability,
-      middleFormEvolutionLevel: mockPokemon.middleFormEvolutionLevel,
-      middleForm: mockPokemon.middleForm,
-      finalFormEvolutionLevel: mockPokemon.finalFormEvolutionLevel,
-      finalForm: mockPokemon.finalForm,
-      hasMoreEvolution: mockPokemon.hasMoreEvolution
+      id: mockUpdatePokemon.id,
+      name: mockUpdatePokemon.name,
+      level: mockUpdatePokemon.level,
+      basicForm: mockUpdatePokemon.basicForm,
+      ability: mockUpdatePokemon.ability,
+      middleFormEvolutionLevel: mockUpdatePokemon.middleFormEvolutionLevel,
+      middleForm: mockUpdatePokemon.middleForm,
+      finalFormEvolutionLevel: mockUpdatePokemon.finalFormEvolutionLevel,
+      finalForm: mockUpdatePokemon.finalForm,
+      hasMoreEvolution: mockUpdatePokemon.hasMoreEvolution
     } as unknown as Pokemon)
+    const data = await updatePokemon.executeForTest(mockUpdatePokemon)
 
-    const data = await updatePokemon.execute(mockPokemon)
-
-    expect(data.id).equal(mockPokemon.id)
+    expect(data.id).equal(mockUpdatePokemon.id)
     sinon.assert.calledOnce(pokemonRepositoryFake)
   })
 })

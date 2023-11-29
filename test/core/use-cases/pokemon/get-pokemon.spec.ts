@@ -2,10 +2,10 @@ import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
-import PokemonRepository from '@/data-providers/repositories/mongoose/pokemon-repository'
+import PokemonRepository from '../../../../src/data-providers/repositories/mongoose/pokemon-repository'
 import { Pokemon } from '@/core/entities/pokemon'
-import { GetPokemon } from '@/core/use-cases/pokemon/get-pokemon'
-import ModelNotFound from '@/core/entities/error/model-not-found'
+import { GetPokemon } from '../../../../src/core/use-cases/pokemon/get-pokemon'
+import ModelNotFound from '../../../../src/core/entities/error/model-not-found'
 
 chai.use(chaiAsPromised)
 
@@ -29,7 +29,7 @@ describe('Get Pokémon', () => {
       await getPokemon.execute(fakeId)
     } catch (e) {
       expect(e).instanceOf(ModelNotFound)
-      expect(e.message).eq(`O pokémon não foi encontrado com o id ${fakeId}`)
+      expect(e.message).eq(`O pokémon ${fakeId} não foi encontrado.`)
     }
   })
 

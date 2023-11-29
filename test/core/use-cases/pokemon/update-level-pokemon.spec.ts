@@ -1,48 +1,36 @@
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import mongoose, { ClientSession } from 'mongoose'
 
-import PokemonRepository from '@/data-providers/repositories/mongoose/pokemon-repository'
-import { UpdatePokemon } from '@/core/use-cases/pokemon/update-pokemon'
-import { Pokemon } from '../../../../src/core/entities/pokemon'
+import PokemonRepository from '../../../../src/data-providers/repositories/mongoose/pokemon-repository'
+import { UpdateLevelPokemon } from '../../../../src/core/use-cases/pokemon/update-level-pokemon'
 import { mockPokemonToUpdateLevel } from '../../../mocks/pokemon'
+import { Pokemon } from '@/core/entities/pokemon'
 
 chai.use(chaiAsPromised)
 
 describe('Update Level Pokémon', () => {
   const sandbox = sinon.createSandbox()
+  const pokemonRepository = new PokemonRepository()
 
   let pokemonRepositoryFake: sinon.SinonStub
-  let updatePokemon: UpdatePokemon
+  let updateLevelPokemon: UpdateLevelPokemon
 
   beforeEach(() => {
     sandbox.restore()
-    const pokemonRepository = new PokemonRepository()
-
-    sandbox.stub(pokemonRepository, 'updateLevel').resolves()
-
-    sandbox.stub(mongoose, 'startSession').resolves({
-      startTransaction: () => sandbox.stub(),
-      commitTransaction: () => sandbox.stub().resolves({}),
-      abortTransaction: () => sandbox.stub().resolves({}),
-      endSession: () => sandbox.stub().resolves(),
-    } as unknown as ClientSession)
-
-    updatePokemon = new UpdatePokemon(
-      pokemonRepository
-    )
+    pokemonRepositoryFake = sandbox.stub(pokemonRepository, 'updateLevel')
+    updateLevelPokemon = new UpdateLevelPokemon(pokemonRepository)
   })
 
-  it("should update pokémon", async () => {
+  it("should update a pokémon level", async () => {
     pokemonRepositoryFake.resolves({
       id: mockPokemonToUpdateLevel.id,
-      level: mockPokemonToUpdateLevel.level
+      level: mockPokemonToUpdateLevel.level,
     } as unknown as Pokemon)
-
-    const data = await updatePokemon.execute(mockPokemonToUpdateLevel)
+    const data = await updateLevelPokemon.executeForTest(mockPokemonToUpdateLevel)
 
     expect(data.id).equal(mockPokemonToUpdateLevel.id)
+    expect(data.level).equal(mockPokemonToUpdateLevel.level)
     sinon.assert.calledOnce(pokemonRepositoryFake)
   })
 })

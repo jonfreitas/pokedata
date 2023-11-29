@@ -9,14 +9,15 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "test/*": ["./test/*"]
     }
   },
   "files": [
     "./node_modules/@types/mocha/index.d.ts"
   ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts", "test"
   ],
   "exclude": [
     "node_modules"

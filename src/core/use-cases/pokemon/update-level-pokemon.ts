@@ -97,4 +97,13 @@ export class UpdateLevelPokemon implements IUpdateLevelPokemon {
       return pokemon
     }
   }
+
+  async executeForTest(pokemon: Pokemon): Promise<Pokemon> {
+    await this.pokemonRepository.updateLevel(pokemon)
+
+    if (!pokemon) {
+      throw new ModelNotFound(`O pokémon ${pokemon.id} não foi encontrado.`)
+    }
+    return pokemon
+  }
 }

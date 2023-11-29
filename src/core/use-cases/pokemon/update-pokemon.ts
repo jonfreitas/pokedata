@@ -64,4 +64,12 @@ export class UpdatePokemon implements IUpdatePokemon {
       return pokemon
     }
   }
+
+  async executeForTest(pokemon: Pokemon): Promise<Pokemon> {
+    await this.pokemonRepository.update(pokemon)
+    if (!pokemon) {
+      throw new ModelNotFound(`O pokémon ${pokemon.id} não foi encontrado.`)
+    }
+    return pokemon
+  }
 }

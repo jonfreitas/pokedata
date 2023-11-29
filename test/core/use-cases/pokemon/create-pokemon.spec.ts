@@ -1,12 +1,13 @@
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
+import mongoose, { ClientSession } from 'mongoose'
 
 import { IPokemonRepository } from '@/core/repositories/pokemon-repository'
-import { CreatePokemon } from '@/core/use-cases/pokemon/create-pokemon'
-import PokemonRepository from '@/data-providers/repositories/mongoose/pokemon-repository'
-import { Pokemon } from '@/core/entities/pokemon'
-import mongoose, { ClientSession } from 'mongoose'
+import { CreatePokemon } from '../../../../src/core/use-cases/pokemon/create-pokemon'
+import PokemonRepository from '../../../../src/data-providers/repositories/mongoose/pokemon-repository'
+import { Pokemon } from '../../../../src/core/entities/pokemon'
+import { mockPokemon, mockCreatePokemon } from '../../../mocks/pokemon'
 
 chai.use(chaiAsPromised)
 
@@ -15,7 +16,6 @@ describe('Create Pokémon', () => {
 
   let pokemonRepository: IPokemonRepository
   let createPokemon: CreatePokemon
-  let pokemon: Pokemon
 
   beforeEach(() => {
     pokemonRepository = new PokemonRepository()
@@ -40,8 +40,8 @@ describe('Create Pokémon', () => {
 
   context('Create Pokémon', () => {
     it('should create a new pokémon', async () => {
-      const result = await createPokemon.execute(pokemon)
-      expect(result.id).to.deep.equals(pokemon.id)
+      const result = await createPokemon.execute(mockCreatePokemon)
+      expect(result.basicForm).to.deep.equals(mockCreatePokemon.basicForm)
     })
   })
 })

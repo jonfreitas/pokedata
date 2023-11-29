@@ -111,6 +111,7 @@ export default class PokemonService extends BaseService {
     callback: sendUnaryData<{ pokemons: PokemonDTO[] }>
   ): Promise<void> => {
     try {
+      console.log(args.request)
       if (args.request !== undefined) {
         const pokemons = await this.listPokemon.execute(args.request)
         return callback(null, { pokemons })

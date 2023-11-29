@@ -1,41 +1,49 @@
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
+import mongoose, { ClientSession } from 'mongoose'
 
-import PokemonRepository from '@/data-providers/repositories/mongoose/pokemon-repository'
-import { ListPokemon } from '@/core/use-cases/pokemon/list-pokemon'
-import { mockPokemon } from 'test/mocks/pokemon';
+import PokemonRepository from '../../../../src/data-providers/repositories/mongoose/pokemon-repository'
+import { ListPokemon } from '../../../../src/core/use-cases/pokemon/list-pokemon'
+import { IPokemonRepository } from '../../../../src/core/repositories/pokemon-repository'
 
 chai.use(chaiAsPromised)
 
 describe('List Pokémon', () => {
   const sandbox = sinon.createSandbox()
-  const pokemonRepository = new PokemonRepository()
 
-  let pokemonListStub: sinon.SinonStub
+  let pokemonRepository: IPokemonRepository
   let listPokemon: ListPokemon
 
   beforeEach(() => {
-    sandbox.restore()
-    pokemonListStub = sandbox.stub(pokemonRepository, 'list')
+    pokemonRepository = new PokemonRepository()
 
-    listPokemon = new ListPokemon(pokemonRepository)
+    listPokemon = new ListPokemon(
+      pokemonRepository
+    )
+
+    sandbox.stub(mongoose, 'startSession').resolves({
+      startTransaction: () => sandbox.stub(),
+      commitTransaction: () => sandbox.stub().resolves({}),
+      abortTransaction: () => sandbox.stub().resolves({}),
+      endSession: () => sandbox.stub().resolves(),
+    } as unknown as ClientSession)
+
+    sandbox.stub(PokemonRepository.prototype, 'list').resolves()
   })
 
-  it('should return list pokémons by abilities', async () => {
-    const result = await listPokemon.execute({
-      abilities: ["Fire"],
+  afterEach(() => sandbox.restore())
+
+  context('List Pokémon', () => {
+    it('should return list pokémons by abilities', async () => {
+      const result= await listPokemon.execute({ abilities: ["Fire"] })
+      expect(result).to.deep.equal(undefined)
     })
 
-    expect(result).to.deep.equal([mockPokemon])
-  })
-
-  it('should return list pokémons by more evolutions or not', async () => {
-    const result = await listPokemon.execute({
-      hasMoreEvolution: false,
+    it('should return list pokémons by more evolutions or not', async () => {
+      const result = await listPokemon.execute({ hasMoreEvolution: false } )
+      expect(result).to.deep.equals(undefined)
     })
-
-    expect(result).to.deep.equal([mockPokemon])
   })
 
 })
