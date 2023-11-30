@@ -4,7 +4,8 @@ import { EngineMongo } from '@sdk12/mongo-connection'
 import { CreatePokemons } from './migrations/0000_create_pokemons'
 import PokemonRepository from "../repositories/mongoose/pokemon-repository"
 
-const dbConnection = process.env.MONGO_URL
+// const dbConnection = process.env.MONGO_URL
+const dbConnection = 'mongodb://root:root@localhost:27017/admin'
 EngineMongo.startConnection([dbConnection])
 
 const pokemonRepository = new PokemonRepository()

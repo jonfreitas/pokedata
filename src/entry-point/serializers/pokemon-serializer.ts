@@ -1,4 +1,4 @@
-import { Pokemon } from '@/core/entities/pokemon'
+import { Pokemon } from '../../core/entities/pokemon'
 import { PokemonDTO } from '../dto/pokemon-dto'
 
 export class PokemonSerializer {

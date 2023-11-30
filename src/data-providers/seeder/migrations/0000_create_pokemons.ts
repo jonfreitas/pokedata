@@ -1,8 +1,8 @@
 import PokemonRepository from "../../repositories/mongoose/pokemon-repository"
-import { Pokemon } from '@/core/entities/pokemon'
+import { Pokemon } from '../../../core/entities/pokemon'
 import { ICreatePokemon } from '@/core/use-cases/pokemon/interfaces/create-pokemon'
 import { pokemonsToInsert } from '../data/pokemons'
-import { PokemonSerializer } from '@/entry-point/serializers/pokemon-serializer'
+import { PokemonSerializer } from '../../../entry-point/serializers/pokemon-serializer'
 
 export class CreatePokemons implements ICreatePokemon {
   private pokemonRepository: PokemonRepository
